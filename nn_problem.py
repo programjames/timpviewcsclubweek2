@@ -78,4 +78,3 @@ def test_function(f):
     """
     inputs, output = generate_random_board()
     return f(inputs) == output
-    
