@@ -127,18 +127,21 @@ class Rocket():
             d_angle = -5
         self.angle += d_angle
         prev_pos = self.pos[:]
-        self.vx += math.sin(self.angle) * power
-        self.vy += math.cos(self.angle) * power - 1 # -1 for gravity
-        self.pos[0] += self.vx
+        self.vx += math.sin(self.angle*math.pi/180) * power
+        self.vy += math.cos(self.angle*math.pi/180) * power - 1 # -1 for gravity
+        self.pos[0] += self.vx # It makes too large leaps otherwise.
         self.pos[1] += self.vy
-        for i in range(len(self.map.points)-1):
-            if check_collision(self.map.points[i], self.map.points[i+1], self.pos, prev_pos):
-                self.crashed = True
-                if self.map.points[i][0] == 0 and self.map.points[i+1][0] == 0 and \
-                   self.vx ** 2 + self.vy ** 2 < 3 ** 2:
-                    self.won = True
+        if self.pos[1] > 100 or self.pos[0] < 0 or self.pos[0] > 100:
+            self.crashed = True
+        else:
+            for i in range(len(self.map.points)-1):
+                if check_collision(self.map.points[i], self.map.points[i+1], self.pos, prev_pos):
+                    self.crashed = True
+                    if self.map.points[i][0] == 0 and self.map.points[i+1][0] == 0 and \
+                       self.vx ** 2 + self.vy ** 2 < 3 ** 2:
+                        self.won = True
 
-                break
+                    break
         self.positions.append(self.pos[:])
         
         self.turn += 1
@@ -147,13 +150,15 @@ class Rocket():
 
     def draw(self):
         sc.set_offsets(self.positions)
-        plt.arrow(self.pos[0], self.pos[1], self.vx, self.vy, head_width = 1.5, color="black")
+        # Uncomment to show velocity vectors too.
+        #plt.arrow(self.pos[0], self.pos[1], self.vx, self.vy, head_width = 1.5, color="black")
         self.map.draw()
 
 r = Rocket()
 while not r.crashed:
     r.draw()
-    r.run_turn(random.randint(-5, 5), random.randint(0, 5))
+    r.run_turn(random.randint(-5, 5), random.randint(0, 2))
+    plt.pause(0.1)
 
 if r.won:
     print("Congrats, you win!")
