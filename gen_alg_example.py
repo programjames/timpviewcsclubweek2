@@ -160,6 +160,7 @@ def dot_plot(x, r=0.1):
 
 plt.ion()
 fig, ax = plt.subplots()
+ax.set_title("Spread of Values")
 x, y = [], []
 sc = ax.scatter(x, y)
 plt.xlim(-100, 100)

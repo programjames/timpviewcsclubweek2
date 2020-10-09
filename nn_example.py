@@ -59,6 +59,7 @@ if __name__ == "__main__":
 
     plt.ion()
     fig, ax = plt.subplots()
+    ax.set_title("Error of Neural Net")
     x, y = [], []
     Ln, = ax.plot(x, y)
 
