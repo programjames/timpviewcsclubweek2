@@ -72,5 +72,5 @@ your genome).
 
 *Extra fun* (not necessary for this problem): Try combining using a genetic
 algorithm with a neural net. So, the weights and biases in your neural net could
-be the genome for the genetic algorithm. Use the turn-by-turn inputs + all of
-the starting inputs as the inputs into the neural net.
+be the genome for the genetic algorithm. Use the turn-by-turn inputs and the terrain
+points as the inputs into the neural net.
