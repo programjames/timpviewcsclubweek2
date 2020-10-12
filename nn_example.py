@@ -39,7 +39,6 @@ class NeuralNet():
         for i, b in enumerate(self.bs):
             off = self.diff(data_ins, data_outs)
             self.bs[i] += dx
-            ys = np.array([self.evaluate(ins) for ins in data_ins])
             new_off = self.diff(data_ins, data_outs)
             self.bs[i] -= dx + step*(new_off - off)/dx
                 
@@ -47,7 +46,6 @@ if __name__ == "__main__":
     import matplotlib.pyplot as plt
 
     np.random.seed(1)
-    ins = [1, 2]
     nn = NeuralNet([2, 4, 4, 1], function=leaky_relu)
     data_ins = [[0, 0], [1, 0], [0, 1], [1, 1]]
     data_outs = [[0], [1], [1], [0]]
